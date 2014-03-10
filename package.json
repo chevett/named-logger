@@ -1,11 +1,14 @@
 {
   "name": "named-logger",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "mike chevett",
-  "license": "mit"
+  "license": "mit",
+  "dependencies": {
+    "moment": "^2.5.1"
+  }
 }
