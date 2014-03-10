@@ -8,7 +8,6 @@ function Logger(name){
 		
 		var data = Array.prototype.slice.call(arguments, 1);
 		var value = data.map(function(arg){
-			console.log('hi');
 			return arg.toString();
 		}).join(' ');
 
