@@ -1,11 +1,14 @@
 function Logger(name){
 	var self = this || {};
-	['verbose', 'info', 'warn', 'error'].forEach(function(level){
+	['debug', 'info', 'warn', 'error'].forEach(function(level){
 		self[level] = log.bind(self, level);
 	});
 	
 	function log(level){
-		var value = Array.prototype.slice(arguments, 1).map(function(arg){
+		
+		var data = Array.prototype.slice.call(arguments, 1);
+		var value = data.map(function(arg){
+			console.log('hi');
 			return arg.toString();
 		}).join(' ');
 
