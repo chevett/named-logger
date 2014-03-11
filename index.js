@@ -16,7 +16,9 @@ function Logger(name){
 		
 		var prefix = '[' +moment().format('MMM DD HH:mm:ssA')+']['+level+ ']' + '[' + name + '] ';
 		fs.appendFile('log.txt', prefix+value+'\n', function (err) {
-			console.dir(err);
+			if (err){
+				console.dir(err);
+			}
 		});
 	}
 
