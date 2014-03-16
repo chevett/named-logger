@@ -1,4 +1,10 @@
 var Logger = require('./index');
-var logger = new Logger('whattt');
+var expect = require('chai').expect;
 
-logger.error('hey man', 'yooooo', 1);
+describe('the constructor', function(){
+	it('should work when passed a name', function(){
+		var logger = new Logger('wtf');
+		expect(logger).to.be.instanceof(Logger);
+	});
+});
+
