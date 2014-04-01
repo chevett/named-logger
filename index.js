@@ -15,7 +15,7 @@ function Logger(name){
 		
 
 		var prefix = '[' +moment().format('MMM DD HH:mm:ssA')+']['+level+ ']' + '[' + name + '] ';
-		var txt = prefix+value;
+		var txt = prefix+value+'\n';
 		process.stdout.write(txt);
 		if (level === 'error'){
 			process.stderr.write(txt);
