@@ -1,5 +1,4 @@
 var moment = require('moment');
-var fs = require('fs');
 
 function Logger(name){
 	var self = this || {};
@@ -14,12 +13,13 @@ function Logger(name){
 			return JSON.stringify(arg);
 		}).join(' ');
 		
+
 		var prefix = '[' +moment().format('MMM DD HH:mm:ssA')+']['+level+ ']' + '[' + name + '] ';
-		fs.appendFile('log.txt', prefix+value+'\n', function (err) {
-			if (err){
-				console.dir(err);
-			}
-		});
+		var txt = prefix+value;
+		process.stdout.write(txt);
+		if (level === 'error'){
+			process.stderr.write(txt);
+		}
 	}
 
 	return self;
