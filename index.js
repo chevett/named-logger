@@ -12,14 +12,11 @@ function Logger(name){
 			if (typeof arg === 'string') return arg;
 			return JSON.stringify(arg);
 		}).join(' ');
-		
+
 
 		var prefix = '[' +moment().format('MMM DD HH:mm:ssA')+']['+level+ ']' + '[' + name + '] ';
 		var txt = prefix+value+'\n';
 		process.stdout.write(txt);
-		if (level === 'error'){
-			process.stderr.write(txt);
-		}
 	}
 
 	return self;
