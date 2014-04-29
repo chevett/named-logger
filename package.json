@@ -1,7 +1,7 @@
 {
   "name": "named-logger",
-  "version": "0.0.9",
-  "description": "11xxsfsdf",
+  "version": "0.0.10",
+  "description": "i know your name.",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha ./index.spec.js"
