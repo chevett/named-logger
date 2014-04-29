@@ -1,4 +1,5 @@
 var moment = require('moment');
+var pretty = require('prettify-error');
 
 function Logger(name){
 	var self = this || {};
@@ -9,6 +10,9 @@ function Logger(name){
 	function log(level){
 		var data = Array.prototype.slice.call(arguments, 1);
 		var value = data.map(function(arg){
+			var prettyError = pretty(arg);
+			if (prettyError) return prettyError;
+
 			if (typeof arg === 'string') return arg;
 			return JSON.stringify(arg);
 		}).join(' ');
