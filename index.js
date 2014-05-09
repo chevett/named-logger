@@ -23,6 +23,7 @@ function Logger(name){
 		process.stdout.write(txt);
 	}
 
+	self.info('starting ', name);
 	return self;
 }
 
