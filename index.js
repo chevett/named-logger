@@ -22,7 +22,7 @@ function Logger(name){
 		}).join(' ');
 
 
-		var prefix = '[' +moment().format('MMM DD HH:mm:ssA')+']['+level+ ']' + '[' + name + '] ';
+		var prefix = '[' +moment().format('MMM DD HH:mm:ss.SSSA')+']['+level+ ']' + '[' + name + '] ';
 		var txt = prefix+value+'\n';
 		process.stdout.write(txt);
 	}
