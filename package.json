@@ -1,6 +1,6 @@
 {
   "name": "named-logger",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,8 +9,9 @@
   "author": "mike chevett",
   "license": "mit",
   "dependencies": {
+    "lodash.iserror": "^3.1.1",
     "moment": "^2.5.1",
-    "prettify-error": "^0.1.0"
+    "pretty-error": "^2.0.0"
   },
   "devDependencies": {
     "chai": "^1.9.0",

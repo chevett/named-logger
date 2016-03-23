@@ -6,5 +6,9 @@ describe('the constructor', function(){
 		var logger = new Logger('wtf');
 		expect(logger).to.be.instanceof(Logger);
 	});
+	it('should render errors', function(){
+		var logger = new Logger('wtf');
+		logger.debug('hello, ', new Error('this is a problem'));
+	});
 });
 

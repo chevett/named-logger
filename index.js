@@ -1,5 +1,8 @@
 var moment = require('moment');
-var pretty = require('prettify-error');
+var isError = require('lodash.iserror');
+var PrettyError = require('pretty-error');
+var prettyError = new PrettyError();
+prettyError.withoutColors();
 
 function Logger(name){
 	var self = this || {};
@@ -10,11 +13,8 @@ function Logger(name){
 	function log(level){
 		var data = Array.prototype.slice.call(arguments, 1);
 		var value = data.map(function(arg){
-			if (arg !== null && arg !== undefined){
-				var prettyError = pretty(arg);
-				if (prettyError) {
-					return prettyError;
-				}
+			if (isError(arg)){
+				return prettyError.render(arg);
 			}
 
 			if (typeof arg === 'string') return arg;
