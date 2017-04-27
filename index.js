@@ -6,6 +6,8 @@ prettyError.withoutColors();
 
 function Logger(name){
 	var self = this || {};
+	self.name = name;
+
 	['debug', 'info', 'warn', 'error'].forEach(function(level){
 		self[level] = log.bind(self, level);
 	});
