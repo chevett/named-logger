@@ -6,7 +6,12 @@ var expect = require('chai').expect;
 describe('the constructor', function(){
 	it('should work when passed a name', function(){
 		var logger = new Logger('wtf');
-		expect(logger).to.be.instanceof(Logger);
+		expect(logger).to.be.a('function');
+		expect(logger.info).to.be.a('function');
+		expect(logger.debug).to.be.a('function');
+		expect(logger.warn).to.be.a('function');
+		expect(logger.error).to.be.a('function');
+		expect(logger.loggerName).to.equal('wtf');
 	});
 	it('should render errors', function(){
 		var logger = new Logger('wtf');
@@ -54,5 +59,41 @@ describe('logLevel filtering', function(){
 		LOG_LEVELS.forEach(function(l){
 			expect(output).to.match(new RegExp('\\[' + l + '\\].*' + l + ' message'));
 		});
+	});
+});
+
+describe('child loggers', function(){
+	var origWrite;
+	var output;
+
+	beforeEach(function(){
+		output = '';
+		origWrite = process.stdout.write;
+		process.stdout.write = function(txt){ output += txt; };
+	});
+
+	afterEach(function(){
+		process.stdout.write = origWrite;
+	});
+
+	it('should allow child loggers to be created', function(){
+		const logger = new Logger('my-app');
+		const child = logger('child');
+		const grandchild = child('grandchild');
+		expect(child).to.be.a('function');
+		expect(child.info).to.be.a('function');
+		expect(grandchild).to.be.a('function');
+		expect(grandchild.info).to.be.a('function');
+
+		logger.info('hello from parent');
+		expect(output).to.match(/\[.*\]\[info\]\[my-app\] hello from parent/);
+
+		output = '';
+		child.info('hello from child');
+		expect(output).to.match(/\[.*\]\[info\]\[my-app\]\[child\] hello from child/);
+
+		output = '';
+		grandchild.info('hello from grandchild');
+		expect(output).to.match(/\[.*\]\[info\]\[my-app\]\[child\]\[grandchild\] hello from grandchild/);
 	});
 });

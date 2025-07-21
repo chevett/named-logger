@@ -8,16 +8,24 @@ const LOG_LEVELS = ['debug', 'info', 'warn', 'error'];
 
 function Logger(name, logLevel){
 	var self = this || {};
-	self.name = name;
+	self.loggerName = name;
 	self.logLevel = logLevel || process.env.LOG_LEVEL || 'debug';
 	var minLevelIdx = LOG_LEVELS.indexOf(self.logLevel);
 
+	function logger(childName) {
+		return new Logger(name + '][' + childName, self.logLevel);
+	}
+
+	Object.keys(self).forEach(function(key) {
+		logger[key] = self[key];
+	});
+
 	LOG_LEVELS.forEach(function(level, idx){
 		if (idx < minLevelIdx) {
-			self[level] = function(){};
+			logger[level] = function(){};
 			return;
 		}
-		self[level] = log.bind(self, level);
+		logger[level] = log.bind(logger, level);
 	});
 	
 	function log(level){
@@ -31,14 +39,13 @@ function Logger(name, logLevel){
 			return JSON.stringify(arg);
 		}).join(' ');
 
-
 		var prefix = '[' +moment().format('MMM DD HH:mm:ss.SSSA')+']['+level+ ']' + '[' + name + '] ';
 		var txt = prefix+value+'\n';
 		process.stdout.write(txt);
 	}
 
-	self.info('starting ', name);
-	return self;
+	logger.info('starting ', name);
+	return logger;
 }
 
 module.exports = Logger;
