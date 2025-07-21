@@ -4,11 +4,19 @@ var PrettyError = require('pretty-error');
 var prettyError = new PrettyError();
 prettyError.withoutColors();
 
-function Logger(name){
+const LOG_LEVELS = ['debug', 'info', 'warn', 'error'];
+
+function Logger(name, logLevel){
 	var self = this || {};
 	self.name = name;
+	self.logLevel = logLevel || process.env.LOG_LEVEL || 'debug';
+	var minLevelIdx = LOG_LEVELS.indexOf(self.logLevel);
 
-	['debug', 'info', 'warn', 'error'].forEach(function(level){
+	LOG_LEVELS.forEach(function(level, idx){
+		if (idx < minLevelIdx) {
+			self[level] = function(){};
+			return;
+		}
 		self[level] = log.bind(self, level);
 	});
 	
